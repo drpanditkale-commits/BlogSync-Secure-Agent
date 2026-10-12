@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Compatibility fix for environments/extensions that overwrite window.fetch
+      (function() {
+        try {
+          var originalFetch = window.fetch ? window.fetch.bind(window) : null;
+          var activeFetch = originalFetch;
+          try {
+            Object.defineProperty(window, 'fetch', {
+              get: function() {
+                return activeFetch;
+              },
+              set: function(fn) {
+                activeFetch = fn;
+              },
+              configurable: true,
+              enumerable: true
+            });
+          } catch (e1) {
+            try {
+              Object.defineProperty(Window.prototype, 'fetch', {
+                get: function() {
+                  return activeFetch;
+                },
+                set: function(fn) {
+                  activeFetch = fn;
+                },
+                configurable: true,
+                enumerable: true
+              });
+            } catch (e2) {}
+          }
+        } catch (err) {}
+
+        // Suppress external browser extension runtime errors
+        window.addEventListener('error', function(e) {
+          if (e && e.filename && e.filename.indexOf('chrome-extension://') !== -1) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
+        }, true);
+      })();
+    </script>
+    <title>Blogger Opal Agent &amp; Activity Exporter</title>
+    <meta name="description" content="Discover and fetch Blogger blogs, manage posts and activity logs, and export securely with Google OAuth 2.0." />
+    <meta property="og:title" content="Blogger Opal Agent &amp; Activity Exporter" />
+    <meta property="og:description" content="Discover and fetch Blogger blogs, manage posts and activity logs, and export securely with Google OAuth 2.0." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

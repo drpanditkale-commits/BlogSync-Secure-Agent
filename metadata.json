@@ -1,0 +1,6 @@
+{
+  "name": "Blogger Opal Agent & Activity Exporter",
+  "description": "Discover and fetch Blogger blogs, manage posts and activity logs, and export securely with Google OAuth 2.0.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
